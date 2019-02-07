@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
- * We are not bring up Spring at all, all we have here is JUnit with Mockito.
+ * We are not bring up Spring Context at all, all we have here is JUnit with Mockito.
  * This test runs very fast.
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -46,6 +46,8 @@ public class ProductServiceImplTest {
         product3.setPrice(new BigDecimal("74.99"));
         product3.setImageUrl("http://example.com/producttest3");
 
+        //remember, here productRepository is a mock, not the real repo object
+        //so we need to define what happens when productRepository.findAll() gets called
         when(productRepository.findAll()).thenReturn(Stream.of(product1,product2,product3).collect(Collectors.toList()));
 
         List products = productService.listAll();
